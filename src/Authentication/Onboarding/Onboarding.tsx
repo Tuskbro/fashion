@@ -2,17 +2,22 @@ import {  Dimensions, StyleSheet, Text, View, Image } from 'react-native';
 import React , {useState, useEffect, useRef, createRef} from 'react';
 import Animated, {  interpolateNode, interpolateColors, multiply, divide, Extrapolate} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-gesture-handler';
+import { RotationGesture, ScrollView } from 'react-native-gesture-handler';
 import Slide, { SLIDE_HEIGHT } from './Slide';
 import {slides} from '../../../assets/data/slides'
 import Subslide from './Subslide';
 import { Dot } from '../../components';
+import { useSelector, RootStateOrAny } from 'react-redux';
+import { Routes, StackNavigationProps } from '../../components/Navigation';
+
 
 
 const {width, height} = Dimensions.get("window");
 
-export default function Onboarding() {
-
+export default function Onboarding  ({navigation}: {navigation:StackNavigationProps<Routes,"Onboarding">})  {
+  const theme : ITheme = useSelector((state: RootStateOrAny)=>state.themeReducer.theme );
+  const styles = getStyles(theme);
+  
   const scrolling = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null); 
 
@@ -31,7 +36,7 @@ export default function Onboarding() {
             <Animated.View style={[styles.underlay,{opacity, backgroundColor: color }]} key={index} >
               <Animated.Image 
               source={{uri: imgUri,method: 'GET',}}  
-              resizeMode='cover' 
+              
               style={[styles.picture,{backgroundColor: color } ]}
               onError={({nativeEvent: { error }}) => console.log({error})}
               />
@@ -89,17 +94,24 @@ export default function Onboarding() {
             translateX: multiply(scrolling,-1)  
           },]
         }]}> 
-          {slides.map(({subtitle, description},index)=>(
-            <Subslide 
+          {slides.map(({subtitle, description},index)=>{
+           const last=index===slides.length-1;
+           return(
+           <Subslide 
               key={index} 
-              last={index===slides.length-1} {...{subtitle, description }}
+               {...{subtitle, description ,last}}
               onPress={
                 ()=>{  
+                  if (last){
+                    navigation.navigate("Welcome");
+                  }
+                  else{
                    scrollRef.current?.scrollTo({x: width*(index+1), animated:true});
+                  }
                 }
               }  
             />
-          ))}
+          )})}
         </Animated.View>
 
       </Animated.View>
@@ -108,10 +120,10 @@ export default function Onboarding() {
   )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme : ITheme) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: theme.backgroundColor,
     },
     slider:{
       height: SLIDE_HEIGHT,
@@ -121,9 +133,9 @@ const styles = StyleSheet.create({
     },
     footer:{
       justifyContent:'flex-end',
-      borderTopLeftRadius: 75,   
+      borderTopLeftRadius: theme.BORDER_RADIUS,   
       flex:1, 
-      backgroundColor: "white", 
+      backgroundColor: theme.backgroundColor, 
     },
     footerContent:{
       width:width*slides.length, 
@@ -132,7 +144,7 @@ const styles = StyleSheet.create({
     },
     pagination:{
       ...StyleSheet.absoluteFillObject,
-      height: 75,
+      height: theme.BORDER_RADIUS,
       flexDirection: 'row',
       justifyContent:'center',
       alignItems:'center',
@@ -141,14 +153,14 @@ const styles = StyleSheet.create({
       ...StyleSheet.absoluteFillObject,
       justifyContent: 'center',
       alignItems: 'center',
-      height: SLIDE_HEIGHT+75,
+      height: SLIDE_HEIGHT+theme.BORDER_RADIUS-25,
     },
     picture:{
-      marginTop:15,
+      marginTop:20,
       alignSelf: 'center',
      ...StyleSheet.absoluteFillObject,
-      width: (SLIDE_HEIGHT+75)*0.8,
-      height: SLIDE_HEIGHT+75,
+      width: (SLIDE_HEIGHT+theme.BORDER_RADIUS-25)*0.8,
+      height: SLIDE_HEIGHT+theme.BORDER_RADIUS-25,
       overflow: 'hidden', 
     },
  

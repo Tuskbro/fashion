@@ -1,19 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { RectButton } from 'react-native-gesture-handler';
+import { useSelector , RootStateOrAny} from 'react-redux';
 
 
 interface ButtonProps {
     label: string;
-    variant: "primary"|"default";
+    variant: "primary"|"default"|"link";
     onPress: () => void;
     
 }
 
 export default function Button({label,variant, onPress}:ButtonProps) {
+    const theme : ITheme = useSelector((state: RootStateOrAny)=>state.themeReducer.theme );
+    const styles = getStyles(theme);
   return (
     <RectButton 
-        style={[styles.container, {backgroundColor: variant=="primary" ? "#BEECC4": "#E1EDE1"}]}
+        style={[styles.container, {backgroundColor: variant==="primary" 
+        ?  theme.PrimaryButtonColor 
+        : variant==="link" 
+        ? "transparent"
+        : theme.buttonColor}]}
         {...{onPress}}
         >
         <View >
@@ -25,9 +32,9 @@ export default function Button({label,variant, onPress}:ButtonProps) {
 
 Button.defaultProps= {variant: "default"};
 
-const styles = StyleSheet.create({
+const getStyles = (theme : ITheme) => StyleSheet.create({
     container:{
-        borderRadius: 25,
+        borderRadius: theme.buttonBorderRadius,
         height:50,
         width: 245,
         justifyContent: "center",
@@ -35,8 +42,8 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     label:{
-        fontSize: 15,
+        fontSize: theme.article,
         textAlign: 'center',
-        fontFamily: "SFPro_Semibold"
+        fontFamily: theme.Semibold,
     },
 })

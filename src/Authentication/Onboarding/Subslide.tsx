@@ -3,6 +3,8 @@ import React from 'react'
 import Animated from 'react-native-reanimated';
 import {Button} from '../../components/index';
 
+import { useSelector,RootStateOrAny } from 'react-redux';
+
 
 interface SubslideProps {
     subtitle: string;
@@ -13,6 +15,8 @@ interface SubslideProps {
 }
 
 export default function Subslide({subtitle, description,last, onPress}:SubslideProps) {
+  const theme : ITheme = useSelector((state: RootStateOrAny)=>state.themeReducer.theme );
+  const styles = getStyles(theme);
   return (
     <View style={styles.container}>
       <Text style={styles.subtitle}>{subtitle}</Text>
@@ -26,7 +30,7 @@ export default function Subslide({subtitle, description,last, onPress}:SubslideP
   )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme : ITheme) => StyleSheet.create({
     container:{
         flex: 1,
         justifyContent: 'center',
@@ -34,19 +38,19 @@ const styles = StyleSheet.create({
         padding: 44,
     },
     subtitle:{
-        fontSize: 24,
-        lineHeight: 24,
-        fontFamily: 'SFPro_Semibold',
+        fontSize: theme.title,
+        lineHeight: theme.title,
+        fontFamily: theme.Semibold,
         marginBottom: 12,
-        color: "#0C0D34",
+        color: theme.textColor,
         textAlign: 'center',
 
     },
     description:{
-        fontSize: 16,
-        lineHeight: 16,
-        fontFamily: 'SFPro_Regular',
-        color: "#0C0D34",
+        fontSize: theme.article,
+        lineHeight: theme.article,
+        fontFamily: theme.Regular,
+        color: theme.textColor,
         textAlign: 'center',
         marginBottom: 12,
         

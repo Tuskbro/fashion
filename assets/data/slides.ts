@@ -11,7 +11,7 @@ export  const slides = [
         color: "#BEECC4", 
         subtitle: "Hear it First, Wear it First", 
         description:"Hating the clothes in your wardrobe? Explore hundreds of outfit idea!",
-        imgUri: "https://fatalerror.xyz/outfit/images/onboarding/583c487a-bbd6-11ec-8422-0242ac120002.png",
+        imgUri: "https://fatalerror.xyz/outfit/images/onboarding/95515d86-c5a4-11ec-9d64-0242ac120002.png",
     },
     {
         title: "Be Free", 
