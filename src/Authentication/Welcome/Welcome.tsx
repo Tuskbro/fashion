@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native'
 import React from 'react'
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { red } from 'react-native-redash';
+
 import {Button} from '../../components/index';
+import { Routes, StackNavigationProps } from '../../components/Navigation';
 
 
 const { width, height } = Dimensions.get('window')
 
-export default function Welcome() {
+export default function Welcome({navigation}: {navigation:StackNavigationProps<Routes,"Welcome">}) {
   const theme : ITheme = useSelector((state: RootStateOrAny)=>state.themeReducer.theme );
   const styles = getStyles(theme);
   return (
@@ -19,9 +20,33 @@ export default function Welcome() {
       <View style={styles.content}>
         <Text style={styles.title}>Let`s get started</Text>
         <Text style={styles.body}>Login to your account below or sign up for an amazing experience</Text>
-        <Button label='Have an account? Login' variant='primary'></Button>
-        <Button label='Join us, it`s Free'></Button>
-        <Button label='Forgot password?' variant='link'></Button>
+        <Button 
+          label='Have an account? Login' 
+          variant='primary' 
+          onPress={
+            ()=>{  
+              navigation.navigate("Login");
+            }
+          }
+        />
+
+        <Button 
+          label='Join us, it`s Free'
+          onPress={
+            ()=>{  
+              navigation.navigate("SignUp");
+            }
+          }
+        />
+        <Button 
+          label='Forgot password?' 
+          variant='link'
+          onPress={
+            ()=>{  
+              navigation.navigate("PasswordRecover");
+            }
+          }
+        />
       </View>
       </View>
     </View>

@@ -8,15 +8,16 @@ interface ButtonProps {
     label: string;
     variant: "primary"|"default"|"link";
     onPress: () => void;
+    width?: number;
     
 }
 
-export default function Button({label,variant, onPress}:ButtonProps) {
+export default function Button({label,variant, onPress, width}:ButtonProps) {
     const theme : ITheme = useSelector((state: RootStateOrAny)=>state.themeReducer.theme );
     const styles = getStyles(theme);
   return (
     <RectButton 
-        style={[styles.container, {backgroundColor: variant==="primary" 
+        style={[styles.container, { width: width, backgroundColor: variant==="primary" 
         ?  theme.PrimaryButtonColor 
         : variant==="link" 
         ? "transparent"
@@ -24,19 +25,22 @@ export default function Button({label,variant, onPress}:ButtonProps) {
         {...{onPress}}
         >
         <View >
-            <Text style={[styles.label,{color: variant=="primary" ? "#FFFFFF": "#000000"}]}>{label}</Text>
+            <Text style={[styles.label,{color: variant=="primary" ? "#FFFFFF": variant==="link" 
+        ? theme.linkColor
+        : "#000000"}]}>{label}</Text>
         </View>
     </RectButton>
   )
 };
 
 Button.defaultProps= {variant: "default"};
+Button.defaultProps= {width: 245};
 
 const getStyles = (theme : ITheme) => StyleSheet.create({
     container:{
         borderRadius: theme.buttonBorderRadius,
         height:50,
-        width: 245,
+        
         justifyContent: "center",
         alignItems: 'center',
         elevation: 5,

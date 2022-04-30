@@ -1,13 +1,13 @@
 import {  Dimensions, StyleSheet, Text, View, Image } from 'react-native';
 import React , {useState, useEffect, useRef, createRef} from 'react';
 import Animated, {  interpolateNode, interpolateColors, multiply, divide, Extrapolate} from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { RotationGesture, ScrollView } from 'react-native-gesture-handler';
 import Slide, { SLIDE_HEIGHT } from './Slide';
 import {slides} from '../../../assets/data/slides'
 import Subslide from './Subslide';
 import { Dot } from '../../components';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector, RootStateOrAny } from 'react-redux'
 import { Routes, StackNavigationProps } from '../../components/Navigation';
 
 

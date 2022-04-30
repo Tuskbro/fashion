@@ -14,6 +14,7 @@ export const darkTheme : ITheme ={
     buttonBorderRadius: 25,
     PrimaryButtonColor: "#2a85ff",
     PrimaryButtonTextColor: "#FFFFFF",
+    linkColor: "#2C8980",
     buttonColor: "#AADBEC",
     buttonTextColor: "#ffffff",
     
@@ -21,7 +22,7 @@ export const darkTheme : ITheme ={
 export const lightTheme : ITheme ={
     mode: "light",
     backgroundColor: "#ffffff",
-    containerBackgroundColor: '#EFEFEF',
+    containerBackgroundColor: '#0c0d34',
     textColor: "#000000",
     hero: 80,
     title: 24,
@@ -34,6 +35,7 @@ export const lightTheme : ITheme ={
     buttonBorderRadius: 25,
     PrimaryButtonColor: "#AADBCC",
     PrimaryButtonTextColor: "#FFFFFF",
+    linkColor: "#2C8980",
     buttonColor: "#e5e5e5",
     buttonTextColor: "#000000",
    

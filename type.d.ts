@@ -15,6 +15,7 @@ interface ITheme {
     buttonTextColor: string,
     PrimaryButtonColor: string,
     PrimaryButtonTextColor: string,
+    linkColor: string,
     containerBackgroundColor: string,
   }
   
